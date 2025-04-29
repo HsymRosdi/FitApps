@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitapps/views/camera/camera_screen.dart';
 import 'package:fitapps/views/home/gym_screen.dart';
 import 'package:fitapps/views/notifications/notification_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const WorkoutPage(),
     const ProfilePage(),
     const GymPage(),
-    const NotificationPage()
+    const NotificationPage(),
+    const CameraPage(),
   ];
 
   @override
@@ -97,6 +99,16 @@ Future<void> _logout() async {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const NotificationPage()),
+          );
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.camera),
+        title: const Text('Progress'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const CameraPage()),
           );
         },
       ),
