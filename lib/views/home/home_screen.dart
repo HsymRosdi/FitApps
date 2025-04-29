@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitapps/views/home/gym_screen.dart';
+import 'package:fitapps/views/notifications/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitapps/views/home/workout_screen.dart';
 import 'package:fitapps/views/home/profile_screen.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const WorkoutPage(),
     const ProfilePage(),
     const GymPage(),
+    const NotificationPage()
   ];
 
   @override
@@ -76,32 +78,42 @@ Future<void> _logout() async {
             : Text("Hi, $lastName 👋"),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
-              onTap: () {
-                Navigator.pop(context); // close the drawer first
-                _logout(); // then logout
-              },
-            ),
-          ],
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
+      const DrawerHeader(
+        decoration: BoxDecoration(
+          color: Color(0xFF2F80ED),
+        ),
+        child: Text(
+          'Menu',
+          style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
+      ListTile(
+        leading: const Icon(Icons.notifications),
+        title: const Text('Notifications'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const NotificationPage()),
+          );
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.logout),
+        title: const Text('Logout'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const LoginScreen()),
+          );
+        },
+      ),
+    ],
+  ),
+),
+
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
