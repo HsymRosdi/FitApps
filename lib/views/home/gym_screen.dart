@@ -10,7 +10,7 @@ class GymPage extends StatefulWidget {
 
 class _GymPageState extends State<GymPage> {
   String locationMessage = 'Tap the button to find nearby gyms!';
-  bool isLoading = false; // 🔥 New variable to track loading
+  bool isLoading = false;
 
   Future<void> _askPermissionAgain() async {
     showDialog(
@@ -20,15 +20,13 @@ class _GymPageState extends State<GymPage> {
         content: const Text('This app needs your location to find nearby gyms. Allow access?'),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close popup
-            },
+            onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () async {
-              Navigator.pop(context); // Close popup
-              await _getCurrentLocation(); // Continue to get location
+              Navigator.pop(context);
+              await _getCurrentLocation();
             },
             child: const Text('Allow'),
           ),
@@ -38,9 +36,7 @@ class _GymPageState extends State<GymPage> {
   }
 
   Future<void> _getCurrentLocation() async {
-    setState(() {
-      isLoading = true; // 🔥 Start loading
-    });
+    setState(() => isLoading = true);
 
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -72,36 +68,49 @@ class _GymPageState extends State<GymPage> {
     setState(() {
       locationMessage =
           'Nearby gyms around: ${position.latitude}, ${position.longitude}';
-      isLoading = false; // 🔥 Stop loading
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Nearby Gyms')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (isLoading)
-                const CircularProgressIndicator() // 🔥 Show spinner
-              else
-                Text(
-                  locationMessage,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 18),
-                ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _askPermissionAgain,
-                child: const Text('Find Nearby Gym'),
-              ),
-            ],
+      // appBar: AppBar(title: const Text('Nearby Gyms')),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // 🔥 Background Image
+          Image.asset(
+            'assets/gym.jpg',
+            fit: BoxFit.cover,
           ),
-        ),
+
+          // 🔥 Foreground Content
+          Container(
+            color: Colors.black.withOpacity(0.6), // optional dark overlay
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (isLoading)
+                    const CircularProgressIndicator()
+                  else
+                    Text(
+                      locationMessage,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _askPermissionAgain,
+                    child: const Text('Find Nearby Gym'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

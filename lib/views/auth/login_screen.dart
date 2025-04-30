@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitapps/views/auth/signup_screen.dart';
 import 'package:fitapps/views/home/home_screen.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,6 +31,21 @@ class _LoginScreenState extends State<LoginScreen> {
       await _auth.signInWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
+      );
+
+      // 🔔 Show welcome notification
+      await notificationsPlugin.show(
+        0,
+        'Welcome back!',
+        'Let\'s hit today\'s goal 💪',
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'login_channel',
+            'Login Notifications',
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
+        ),
       );
 
       Navigator.pushReplacement(

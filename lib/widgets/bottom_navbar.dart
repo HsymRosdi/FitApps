@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -12,29 +13,17 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      selectedItemColor: const Color(0xFF2F80ED),
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white,
+    return CurvedNavigationBar(
+      index: currentIndex,
+      height: 60,
+      backgroundColor: const Color.fromARGB(255, 24, 20, 20),
+      color: const Color.fromARGB(255, 115, 123, 134),
+      animationDuration: const Duration(milliseconds: 300),
+      onTap: onTap, // use your callback
       items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.fitness_center),
-          label: 'Workout',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.sports_gymnastics),
-          label: 'Gym',
-        ),
+        Icon(Icons.home, color: Colors.white),
+        Icon(Icons.fitness_center, color: Colors.white),
+        Icon(Icons.person, color: Colors.white),
       ],
     );
   }
