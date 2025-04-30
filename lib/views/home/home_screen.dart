@@ -2,13 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitapps/views/camera/camera_screen.dart';
 import 'package:fitapps/views/home/gym_screen.dart';
-import 'package:fitapps/views/notifications/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitapps/views/home/workout_screen.dart';
 import 'package:fitapps/views/home/profile_screen.dart';
 import 'package:fitapps/widgets/bottom_navbar.dart';
 import 'package:fitapps/views/auth/login_screen.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart'; // ✅ add this
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,9 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _loadUserData();
 
-    // ✅ Initialize YouTube player controller
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId('https://www.youtube.com/watch?v=2i2khp_npdE')!, // 🎵 your motivational video
+      initialVideoId: YoutubePlayer.convertUrlToId('https://www.youtube.com/watch?v=2i2khp_npdE')!,
       flags: const YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
@@ -78,11 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> _pages = [
-    Placeholder(), // still your normal pages
+    Placeholder(),
     const WorkoutPage(),
     const ProfilePage(),
     const GymPage(),
-    const NotificationPage(),
     const CameraPage(),
   ];
 
@@ -96,97 +93,133 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildHomePage() {
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  "Hi, $lastName 👋",
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+  return isLoading
+      ? const Center(child: CircularProgressIndicator())
+      : Stack(
+          children: [
+            
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/gym.jpg"), // 👈 Your image path
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: 120,
-                  child: PageView.builder(
-                    itemCount: quotes.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Card(
+              ),
+            ),
+
+            // 🟦 Semi-transparent overlay for contrast
+            Container(
+              color: Colors.black.withOpacity(0.6),
+            ),
+
+            // 📝 Main content
+            SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      "Hi, $lastName 👋",
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  const Text(
+                    "💬 Daily Motivation",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  SizedBox(
+                    height: 140,
+                    child: PageView.builder(
+                      itemCount: quotes.length,
+                      controller: PageController(viewportFraction: 0.9),
+                      itemBuilder: (context, index) {
+                        return Card(
                           elevation: 5,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          color: Colors.white.withOpacity(0.9),
                           child: Center(
                             child: Padding(
-                              padding: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(20),
                               child: Text(
                                 quotes[index],
-                                style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black87,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                // 🎵 Add Gym Song Player here
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "🎵 Gym Workout Song 🎵",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
-                        width: double.infinity,
-                      ),
-                    ],
+
+                  const SizedBox(height: 40),
+
+                  const Text(
+                    "🎵 Workout Song of the Day",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-              ],
+                  const SizedBox(height: 12),
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: YoutubePlayer(
+                      controller: _controller,
+                      showVideoProgressIndicator: true,
+                      width: double.infinity,
+                      progressIndicatorColor: Colors.blueAccent,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
-          );
-  }
+          ],
+        );
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: isLoading
-            ? const Text("Loading...")
-            : Text("Hi, $lastName 👋"),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: const Color.fromARGB(255, 56, 61, 65),
       ),
       drawer: Drawer(
+        backgroundColor: const Color.fromARGB(255, 190, 192, 196),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFF2F80ED),
+                color: Color.fromARGB(255, 87, 93, 100),
               ),
               child: Text(
                 'Menu',
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.notifications),
-              title: const Text('Notifications'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const NotificationPage()),
-                );
-              },
             ),
             ListTile(
               leading: const Icon(Icons.camera),
