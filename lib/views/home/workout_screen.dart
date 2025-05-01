@@ -16,7 +16,7 @@ class WorkoutPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // 🌄 Background Image
+        
           Positioned.fill(
             child: Image.asset(
               "assets/gym2.jpg",
@@ -24,7 +24,6 @@ class WorkoutPage extends StatelessWidget {
             ),
           ),
 
-          // 💪 Foreground Grid
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(1),

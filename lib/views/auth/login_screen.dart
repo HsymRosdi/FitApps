@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password.trim(),
       );
 
-      // 🔔 Show welcome notification
+      // welcome notification
       await notificationsPlugin.show(
         0,
         'Welcome back!',

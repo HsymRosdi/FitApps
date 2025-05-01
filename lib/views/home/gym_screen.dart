@@ -79,15 +79,15 @@ class _GymPageState extends State<GymPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 🔥 Background Image
+          // Background Image
           Image.asset(
             'assets/gym.jpg',
             fit: BoxFit.cover,
           ),
 
-          // 🔥 Foreground Content
+          // Foreground Content
           Container(
-            color: Colors.black.withOpacity(0.6), // optional dark overlay
+            color: Colors.black.withOpacity(0.6),
             padding: const EdgeInsets.all(16),
             child: Center(
               child: Column(

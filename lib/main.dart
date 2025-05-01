@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'views/auth/login_screen.dart'; // <-- Your LoginScreen
+import 'views/auth/login_screen.dart';
 
 final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -25,7 +25,7 @@ void main() async {
     await Firebase.initializeApp();
   }
 
-  // 🔥 Initialize Notifications
+  // Initialize Notifications
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FitApps',
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(), // <-- Entry point of your app
+      home: const LoginScreen(),
     );
   }
 }
