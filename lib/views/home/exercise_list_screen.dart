@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Instruction page
 class ExerciseInstructionScreen extends StatelessWidget {
   final String title;
   final List<String> steps;

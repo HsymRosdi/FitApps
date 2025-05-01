@@ -101,18 +101,18 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/gym.jpg"), // 👈 Your image path
+                  image: AssetImage("assets/gym.jpg"), 
                   fit: BoxFit.cover,
                 ),
               ),
             ),
 
-            // 🟦 Semi-transparent overlay for contrast
+          
             Container(
               color: Colors.black.withOpacity(0.6),
             ),
 
-            // 📝 Main content
+            
             SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(

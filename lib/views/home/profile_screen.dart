@@ -91,14 +91,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body: Stack(
         children: [
-          // 🌄 Background image
+          
           Positioned.fill(
             child: Image.asset(
               'assets/gym.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          // 🧱 Foreground content
+          
           SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 30),
 
-                // 📧 Email section
+               
                 Card(
                   elevation: 4,
                   margin: const EdgeInsets.only(bottom: 30),
@@ -141,7 +141,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
 
-                // 🔐 Password section
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
